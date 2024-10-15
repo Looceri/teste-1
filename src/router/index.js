@@ -3,7 +3,10 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '../views/LoginView.vue'
 import AdminView from '../views/AdminView.vue';
-import { store } from '../stores/auth.js';
+import ClientView from '../views/ClientView.vue';
+import Services from '../views/ServicesView.vue';
+import Contact from '../views/ContactView.vue';
+import { useAuthStore } from '../stores/auth'; // Import the store where perfil is stored
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +16,12 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+  {
+    path: '/services', component: Services
+  },
+  {
+    path: '/contact', component: Contact
+  },
     {
       path: '/about',
       name: 'about',
@@ -30,17 +39,29 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/admin',
-      name: 'Admin',
-      component: AdminView,
-      beforeEnter: (to, from, next) => {
-        if (store.state.user.role === 'Admin') {
-          next();
-        } else {
-          next({ name: 'Home' }); // Redirecionar se não for admin
-        }
+      path: '/home',
+    name: 'cliente-home',
+    component: ClientView,
+    beforeEnter: (to, from, next) => {
+      if (useAuthStore.perfil === 'Cliente') {
+        next(); // Allow access for users with 'Cliente' perfil
+      } else {
+        next('/login'); // Redirect to login if perfil is not 'Cliente'
       }
-    },
+    }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminView,
+    beforeEnter: (to, from, next) => {
+      if (useAuthStore.perfil === 'Admin') {
+        next(); // Allow access for users with 'Admin' perfil
+      } else {
+        next('/login'); // Redirect to login if perfil is not 'Admin'
+      }
+    }
+  }
   ]
 })
 

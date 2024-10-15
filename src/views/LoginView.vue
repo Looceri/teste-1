@@ -3,7 +3,8 @@
     <div class="container">
       <div class="left">
         <div class="login">Login</div>
-        <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to read</div>
+        <div class="eula">Ao fazer login, você concorda com os termos ridiculamente longos que você não se deu ao trabalho de ler
+          </div>
       </div>
       <div class="right">
         <svg viewBox="0 0 320 300">
@@ -33,51 +34,43 @@
       </div>
     </div>
   </div>
+  <SelectionStyle :selectionColor="'#2D2F36'" />
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth'; // Importa o store de autenticação
+import { useAuthStore } from '@/stores/auth';
 import anime from 'animejs/lib/anime.es.js';
 
-export default {
-  setup() {
-    const email = ref('');
-    const password = ref('');
-    const svgPath = ref('m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143');
+const email = ref('');
+const password = ref('');
+const svgPath = ref('m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143');
 
-    const authStore = useAuthStore(); // Usa o store de autenticação
+const authStore = useAuthStore();
 
-    const handleSubmit = () => {
-      authStore.login(email.value, password.value); // Chama a função de login
-    };
-
-    const animatePath = (target) => {
-      if (this.currentAnimation) this.currentAnimation.pause();
-      this.currentAnimation = anime({
-        targets: 'path',
-        strokeDashoffset: { value: getOffsetValue(target), duration: 700, easing: 'easeOutQuart' },
-        strokeDasharray: { value: getDashArrayValue(target), duration: 700, easing: 'easeOutQuart' },
-      });
-    };
-
-    const getOffsetValue = (target) => {
-      return target === 'email' ? 0 : target === 'password' ? -336 : -730;
-    };
-
-    const getDashArrayValue = (target) => {
-      return target === 'email' ? '240 1386' : target === 'password' ? '240 1386' : '530 1386';
-    };
-
-    return {
-      email,
-      password,
-      svgPath,
-      handleSubmit,
-      animatePath,
-    };
-  }
+const handleSubmit = () => {
+  authStore.login(email.value, password.value);
 };
+
+let currentAnimation;
+
+const animatePath = (target) => {
+  if (currentAnimation) currentAnimation.pause();
+  currentAnimation = anime({
+    targets: 'path',
+    strokeDashoffset: { value: getOffsetValue(target), duration: 700, easing: 'easeOutQuart' },
+    strokeDasharray: { value: getDashArrayValue(target), duration: 700, easing: 'easeOutQuart' },
+  });
+};
+
+const getOffsetValue = (target) => {
+  return target === 'email' ? 0 : target === 'password' ? -336 : -730;
+};
+
+const getDashArrayValue = (target) => {
+  return target === 'email' ? '240 1386' : target === 'password' ? '240 1386' : '530 1386';
+};
+
 </script>
 
 <style scoped>
@@ -98,11 +91,10 @@ body {
   padding: 20px;
 }
 .page {
-  background: #e2e2e5;
+  background: #ff001c;
   display: flex;
   flex-direction: column;
   height: calc(100% - 40px);
-  position: absolute;
   place-content: center;
   width: calc(100% - 40px);
 }
@@ -142,6 +134,7 @@ body {
   }
 }
 .login {
+  color:#ff001c;
   font-size: 50px;
   font-weight: 900;
   margin: 50px 40px 40px;

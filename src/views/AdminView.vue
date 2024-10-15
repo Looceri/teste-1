@@ -1,18 +1,19 @@
-<!-- src/views/AdminView.vue -->
-<template>
-  <div>
-    <h1>Painel de Administrador</h1>
-    <!-- Conteúdo do painel -->
-  </div>
-</template>
+<script setup>
+import AdminPanel from '../components/AdminPanel.vue';
 
-<script>
-export default {
-  name: 'AdminView',
-  // Defina dados, métodos e outras opções aqui
-};
+
 </script>
 
-<style scoped>
-/* Adicione estilos aqui, se necessário */
+<template>
+  <AdminPanel/>
+</template>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
 </style>
