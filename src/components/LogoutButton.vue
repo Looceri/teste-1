@@ -1,6 +1,6 @@
 <!-- src/components/LogoutButton.vue -->
 <template>
-  <button @click="handleLogout">Logout</button>
+  <button >Logout</button>
 </template>
 
 <script>

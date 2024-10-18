@@ -48,7 +48,7 @@ const router = createRouter({
     },
     {
       path: '/admin',
-      name: 'Admin',
+      name: 'admin-home',
       component: AdminView,
       beforeEnter: (to, from, next) => {
         const authStore = useAuthStore(); // Chama a store dentro do guard

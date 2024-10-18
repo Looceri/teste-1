@@ -41,6 +41,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import anime from 'animejs/lib/anime.es.js';
+import router from '@/router';
 
 const email = ref('');
 const password = ref('');
@@ -50,6 +51,13 @@ const authStore = useAuthStore();
 
 const handleSubmit = () => {
   authStore.login(email.value, password.value);
+
+  // Redireciona para o dashboard do Cliente ou Admin com base no perfil
+  if (authStore.perfil === 'Cliente') {
+    router.push({ name: 'cliente-home' });
+  } else if (authStore.perfil === 'Admin') {
+    router.push({ name: 'admin-home' });
+  }
 };
 
 let currentAnimation;

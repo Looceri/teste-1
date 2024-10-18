@@ -2,8 +2,7 @@
 <template>
   <div>
     <h1>Painel do Cliente</h1>
-    asdasd
-    <LogoutButton /> <!-- Adicionando o botão de Logout -->
+    <LogoutButton @click="logout" /> <!-- Adicionando o botão de Logout -->
     <h2>Restaurantes</h2>
     <ul>
       <li v-for="restaurant in restaurants" :key="restaurant.id">
@@ -17,6 +16,8 @@
 <script>
 import { useRestaurantStore } from '../stores/restaurants';
 import LogoutButton from '../components/LogoutButton.vue';
+import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
 
 export default {
   name: 'ClientView',
@@ -39,6 +40,12 @@ export default {
       }
     };
 
+    const logout = () => {
+      const authStore = useAuthStore();
+      authStore.logout(); // Chame a função de logout do AuthStore
+      router.push({ name: 'login' });
+    };
+
     const toggleFavorite = (item) => {
       if (restaurantStore.isFavorite(item)) {
         restaurantStore.removeFavorite(item);
@@ -56,6 +63,7 @@ export default {
     };
 
     return {
+      logout,
       restaurants,
       favoriteItems,
       selectedRestaurant,
